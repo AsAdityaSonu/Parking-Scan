@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
+from LoginPage import LoginPage
+from MainPage import MainPage
 
 
 class App(tk.Tk):
@@ -9,6 +11,12 @@ class App(tk.Tk):
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         self.geometry(f"{screen_width}x{screen_height}")
+
+        # Frame widget
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
 
 
 def main():
