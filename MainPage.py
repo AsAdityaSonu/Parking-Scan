@@ -1,13 +1,13 @@
-import tkinter as tk
+import customtkinter as ctk
+import tkinter.messagebox as tkmb
 
 
-class MainPage(tk.Frame):
-    def __init__(self, parent, controller):
-        super().__init__(parent)
-        self.controller = controller
+def Dashboard(app):
+    label = ctk.CTkLabel(app, text="Welcome to the New Page", font=("Helvetica", 24, "bold"))
+    label.pack(pady=50)
 
-        label = tk.Label(self, text="Welcome to the Main Page")
-        label.pack(pady=10, padx=10)
+    message_label = ctk.CTkLabel(app, text="You have successfully logged in.", font=("Helvetica", 16))
+    message_label.pack(pady=20)
 
-        logout_button = tk.Button(self, text="Logout", command=lambda: controller.show_frame("LoginPage"))
-        logout_button.pack()
+    back_button = ctk.CTkButton(app, text="Back to Login", command=main_window, font=("Helvetica", 16, "bold"))
+    back_button.pack(pady=20)

@@ -1,33 +1,22 @@
-import tkinter as tk
-from tkinter import messagebox
+import tkinter.messagebox as tkmb
+from MainPage import Dashboard
 
 
-class LoginPage(tk.Frame):
-    def __init__(self, parent, controller):
-        super().__init__(parent)
-        self.controller = controller
+def login(app, user_entry, user_pass):
+    username = "aadi"
+    password = "12345"
+    if user_entry.get() == username and user_pass.get() == password:
+        tkmb.showinfo(title="Login Successful", message="You have logged in successfully")
+        redirectTo(app)
+    elif user_entry.get() == username and user_pass.get() != password:
+        tkmb.showwarning(title='Wrong Password', message='Please check your password')
+    elif user_entry.get() != username and user_pass.get() == password:
+        tkmb.showwarning(title='Wrong Username', message='Please check your username')
+    else:
+        tkmb.showerror(title="Login Failed", message="Invalid Username and password")
 
-        self.label_username = tk.Label(self, text="Username")
-        self.label_username.pack(pady=5)
 
-        self.entry_username = tk.Entry(self)
-        self.entry_username.pack(pady=5)
-
-        self.label_password = tk.Label(self, text="Password")
-        self.label_password.pack(pady=5)
-
-        self.entry_password = tk.Entry(self, show="*")
-        self.entry_password.pack(pady=5)
-
-        self.login_button = tk.Button(self, text="Login", command=self.login)
-        self.login_button.pack(pady=20)
-
-    def login(self):
-        username = self.entry_username.get()
-        password = self.entry_password.get()
-
-        # validation
-        if username == "admin" and password == "password":
-            self.controller.show_frame("MainPage")
-        else:
-            messagebox.showerror("Login Info", "Invalid Username or Password")
+def redirectTo(app):
+    for widget in app.winfo_children():
+        widget.destroy()
+    Dashboard(app)
