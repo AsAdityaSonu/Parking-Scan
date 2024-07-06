@@ -1,21 +1,52 @@
+import tkinter as tk
 import tkinter.messagebox as tkmb
 import customtkinter as ctk
-from PIL import Image
 from MainPage import Dashboard
+from PIL import Image, ImageTk
 
 
 def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
+    # -------------------------------- Bg Img --------------------------------
+    image = Image.open("/Users/adityapandey/GUI/pythonProject/Tkinter/bg.png")
+    image = image.resize((app.winfo_screenwidth(), app.winfo_screenheight()))
+    photo = ImageTk.PhotoImage(image)
+
+    screen_width = app.winfo_screenwidth()
+    canvas = tk.Canvas(app, width=screen_width, height=app.winfo_screenheight(), bd=0, highlightthickness=0)
+    canvas.pack(fill="both", expand=True)
+    canvas.create_image(0, 0, anchor="nw", image=photo)
+
+    # Store a reference to the image to prevent garbage collection
+    app.image_reference = photo
+    # -------------------------------- TOP INTRO --------------------------------
+    # label = ctk.CTkLabel(
+    #     master=canvas,
+    #     text="Welcome to the Pehal Portal!",
+    #     font=("Helvetica", 36, "bold"),
+    #     text_color="white",
+    #     fg_color="red",
+    # )
+    # canvas.create_window(screen_width // 2, 40, window=label)
+
+    canvas.create_text(
+        screen_width // 2, 60,
+        text="Welcome to the Parking Portal!",
+        fill="#E63981",
+        font=("Helvetica", 40, "bold"),
+        anchor="n",
+    )
+
+    # -------------------------------- Login Box --------------------------------
     frame = ctk.CTkFrame(
         master=app,
         width=frame_width,
         height=frame_height,
         border_width=2,
-        border_color="#404040"
+        fg_color="#071B4B",
+        border_color="#173885"
+        # border_color="#E63981"
     )
     frame.place(x=frame_x, y=frame_y, anchor='center')
-
-    label = ctk.CTkLabel(app, text="Welcome to the Pehal Portal!", font=("Helvetica", 36, "bold"))
-    label.pack(pady=60)
 
     image_path = "/Users/adityapandey/GUI/pythonProject/Tkinter/7.jpg"
     try:
@@ -38,7 +69,7 @@ def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
         height=40,
         corner_radius=10,
         border_width=2,
-        border_color="gray",
+        border_color="#637db8",
         fg_color="white",
         # bg_color="lightblue",
         text_color="black",
@@ -55,7 +86,7 @@ def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
         height=40,
         corner_radius=10,
         border_width=2,
-        border_color="gray",
+        border_color="#637db8",
         fg_color="white",
         # bg_color="lightblue",
         text_color="black",
@@ -72,10 +103,10 @@ def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
         height=40,
         corner_radius=10,
         border_width=2,
-        border_color="gray",
-        fg_color="lightblue",
-        hover_color="lightblue",
-        text_color="black"
+        border_color="#637db8",
+        fg_color="#3f6ccc",
+        hover_color="#4f7de0",
+        text_color="white"
     )
     login_button.pack(pady=12)
 

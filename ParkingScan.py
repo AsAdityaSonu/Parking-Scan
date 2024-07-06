@@ -1,14 +1,5 @@
-'''
-    This file is the entry point for the Parking Scan application.
-'''
-
 import customtkinter as ctk
 from LoginPage import loginScreen
-
-
-def set_theme():
-    ctk.set_appearance_mode("dark")
-    ctk.set_default_color_theme("blue")
 
 
 def main_window(app):
@@ -23,14 +14,13 @@ def main_window(app):
     frame_width = 500
     frame_height = 600
     frame_x = screen_width // 2
-    frame_y = (screen_height - 100) // 2
+    frame_y = (screen_height - 50) // 2
 
     loginScreen(app, frame_width, frame_height, frame_x, frame_y)
 
 
 def main():
     app = ctk.CTk()
-    set_theme()
     main_window(app)
     app.mainloop()
 
