@@ -7,7 +7,7 @@ from PIL import Image, ImageTk
 
 def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
     # -------------------------------- Bg Img --------------------------------
-    image = Image.open("/Users/adityapandey/GUI/pythonProject/Tkinter/bg.png")
+    image = Image.open("Tkinter/Images/bg.png")
     image = image.resize((app.winfo_screenwidth(), app.winfo_screenheight()))
     photo = ImageTk.PhotoImage(image)
 
@@ -29,7 +29,7 @@ def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
     # canvas.create_window(screen_width // 2, 40, window=label)
 
     canvas.create_text(
-        screen_width // 2, 60,
+        screen_width // 2, 80,
         text="Welcome to the Parking Portal!",
         fill="#E63981",
         font=("Helvetica", 40, "bold"),
@@ -48,7 +48,7 @@ def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
     )
     frame.place(x=frame_x, y=frame_y, anchor='center')
 
-    image_path = "/Users/adityapandey/GUI/pythonProject/Tkinter/7.jpg"
+    image_path = "Tkinter/Images/logo.png"
     try:
         image = Image.open(image_path)
         ctk_image = ctk.CTkImage(light_image=image, dark_image=image, size=(100, 100))
@@ -113,7 +113,7 @@ def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
 
 def login(app, user_entry, user_pass):
     username = "aadi"
-    password = "12345"
+    password = "tiet"
     if user_entry.get() == username and user_pass.get() == password:
         tkmb.showinfo(title="Login Successful", message="You have logged in successfully")
         redirectTo(app)
