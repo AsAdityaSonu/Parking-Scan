@@ -72,7 +72,7 @@ def changePage(content, app):
         imageCamera = ctk.CTkImage(light_image=Image.open(imagePathCamera), size=(150, 150))
 
         def on_button_click():
-            Camera(app, "Camera 1")
+            Camera(app, 0)
 
         image_button = ctk.CTkButton(
             master=frameRightBottom,
