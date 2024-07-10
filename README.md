@@ -36,11 +36,11 @@ Our project is developed by a dedicated team of students under the guidance of e
 
 ### Students
 
-- Aditya Pandey
-- Vaibhav Baldeva
-- Mridula Pal
-- Nitika Joshi
-- Dhwani
+- **Aditya Pandey** - [GitHub Profile](https://github.com/asadityasonu)
+- **Vaibhav Baldeva**
+- **Mridula Pal** 
+- **Nitika Joshi**
+- **Dhwani** 
 
 ## Getting Started
 
