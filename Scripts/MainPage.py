@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from Camera import Camera
 from PIL import Image, ImageTk
 
 bgColor = "#0e1017"
@@ -71,7 +72,7 @@ def changePage(content, app):
         imageCamera = ctk.CTkImage(light_image=Image.open(imagePathCamera), size=(150, 150))
 
         def on_button_click():
-            print("Button clicked!")
+            Camera(app, "Camera 1")
 
         image_button = ctk.CTkButton(
             master=frameRightBottom,
