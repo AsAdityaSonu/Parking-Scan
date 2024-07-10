@@ -7,7 +7,7 @@ from PIL import Image, ImageTk
 
 def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
     # -------------------------------- Bg Img --------------------------------
-    image = Image.open("Tkinter/Images/bg.png")
+    image = Image.open("Images/bg.png")
     image = image.resize((app.winfo_screenwidth(), app.winfo_screenheight()))
     photo = ImageTk.PhotoImage(image)
 
@@ -48,7 +48,7 @@ def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
     )
     frame.place(x=frame_x, y=frame_y, anchor='center')
 
-    image_path = "Tkinter/Images/logo.png"
+    image_path = "Images/logo.png"
     try:
         image = Image.open(image_path)
         ctk_image = ctk.CTkImage(light_image=image, dark_image=image, size=(100, 100))
@@ -109,6 +109,11 @@ def loginScreen(app, frame_width, frame_height, frame_x, frame_y):
         text_color="white"
     )
     login_button.pack(pady=12)
+
+    def on_key_press(event):
+        login_button.invoke()
+
+    app.bind('<Return>', on_key_press)
 
 
 def login(app, user_entry, user_pass):
