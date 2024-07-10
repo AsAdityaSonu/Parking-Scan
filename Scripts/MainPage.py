@@ -154,7 +154,6 @@ def changePage(content, app):
         )
         description_label.pack(pady=20)
 
-        # bullet-point features
         features = [
             "Easy login.",
             "Real-time parking lot status visualization.",
@@ -200,42 +199,39 @@ def changePage(content, app):
         )
         frameRightBottomAbout.pack(fill='both', expand=True)
 
-        # Project description
-        about_text = (
+        aboutText = (
             "Our project is developed by a dedicated team of students under the guidance of experienced mentors. "
             "We aim to create innovative solutions for parking lot management using vision-based technologies."
         )
 
         about_label = ctk.CTkLabel(
             master=frameRightBottomAbout,
-            text=about_text,
+            text=aboutText,
             font=("Helvetica", 16),
             wraplength=app.winfo_screenwidth() * 0.70,
             justify="left"
         )
         about_label.pack(pady=20)
 
-        # Create a frame to hold both mentors and students side by side
-        side_by_side_frame = ctk.CTkFrame(
+        sideBySideFrame = ctk.CTkFrame(
             master=frameRightBottomAbout,
             fg_color=bgColor
         )
-        side_by_side_frame.pack(fill='both', expand=True, padx=20, pady=20)
+        sideBySideFrame.pack(fill='both', expand=True, padx=20, pady=20)
 
-        # Mentors section
         mentors_frame = ctk.CTkFrame(
-            master=side_by_side_frame,
+            master=sideBySideFrame,
             fg_color=bgColor
         )
         mentors_frame.pack(side='left', fill='both', expand=True, padx=20)
 
-        mentors_label = ctk.CTkLabel(
+        mentorsLabel = ctk.CTkLabel(
             master=mentors_frame,
             text="Mentors",
             font=("Helvetica", 20, "bold"),
             justify="left"
         )
-        mentors_label.pack(padx=30, pady=10, anchor='w')
+        mentorsLabel.pack(padx=30, pady=10, anchor='w')
 
         mentors = [
             "Prof. Kulbir Singh",
@@ -252,15 +248,14 @@ def changePage(content, app):
             )
             mentor_label.pack(padx=30, pady=5, anchor='w')
 
-        # Students section
-        students_frame = ctk.CTkFrame(
-            master=side_by_side_frame,
+        studentsFrame = ctk.CTkFrame(
+            master=sideBySideFrame,
             fg_color=bgColor
         )
-        students_frame.pack(side='left', fill='both', expand=True, padx=20)
+        studentsFrame.pack(side='left', fill='both', expand=True, padx=20)
 
         students_label = ctk.CTkLabel(
-            master=students_frame,
+            master=studentsFrame,
             text="Students",
             font=("Helvetica", 20, "bold"),
             justify="left"
@@ -277,7 +272,7 @@ def changePage(content, app):
 
         for student in students:
             student_label = ctk.CTkLabel(
-                master=students_frame,
+                master=studentsFrame,
                 text=f"• {student}",
                 font=("Helvetica", 16)
             )
