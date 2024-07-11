@@ -1,6 +1,5 @@
 import customtkinter as ctk
 from LoginPage import loginScreen
-from MainPage import Dashboard
 
 
 def main_window(app):
