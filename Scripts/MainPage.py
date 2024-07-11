@@ -52,7 +52,7 @@ def changePage(content, app):
             text="Sign out",
             fg_color="#ffffff",
             hover_color="#eeeeee",
-            text_color="#E63981",
+            text_color="#53b5ac",
             font=("Helvetica", 18),
             command=lambda: changePage("logout", app)
         )
@@ -351,9 +351,9 @@ def Dashboard(app):
     frameLeftCenterButtons.place(relx=0.5, rely=0, anchor='n', relwidth=1, x=0)
 
     # Define button colors
-    button_color = "#ed0077"
-    button_hover_color = "#fa1b78"
-    button_border_color = "#FF66A3"
+    button_color = bgColor
+    button_hover_color = "#1f222b"
+    button_border_color = "#81e6dd"
 
     button1 = ctk.CTkButton(
         master=frameLeftCenterButtons,

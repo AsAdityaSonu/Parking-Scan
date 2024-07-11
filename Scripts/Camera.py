@@ -118,7 +118,7 @@ def Camera(app, cameraNo):
 
     labelCamera = ctk.CTkLabel(
         master=frameCenter,
-        text=""
+        text="",
     )
     labelCamera.pack(fill="both", expand=True)
 
@@ -148,7 +148,11 @@ def Camera(app, cameraNo):
         text="Take Snapshot",
         command=takeSnapshot(camera),
         width=150,
-        height=40
+        height=40,
+        border_color="#81e6dd",
+        fg_color=bgColor,
+        bg_color=bgColor,
+        border_width=2,
     )
     snapshot_button.pack(side="left", padx=10, pady=(10, 30))
 
@@ -157,7 +161,11 @@ def Camera(app, cameraNo):
         text="Pause",
         command=lambda: togglePause(pause_button),
         width=150,
-        height=40
+        height=40,
+        border_color="#81e6dd",
+        fg_color=bgColor,
+        bg_color=bgColor,
+        border_width=2,
     )
     pause_button.pack(side="left", padx=10, pady=(10, 30))
 
@@ -166,7 +174,11 @@ def Camera(app, cameraNo):
         text="Back",
         command=lambda: Dashboard(app),
         width=150,
-        height=40
+        height=40,
+        border_color="#81e6dd",
+        fg_color=bgColor,
+        bg_color=bgColor,
+        border_width=2,
     )
     exit_button.pack(side="left", padx=10, pady=(10, 30))
 
