@@ -47,6 +47,12 @@ def togglePause(pause_button):
     pause_button.configure(text="Play" if paused else "Pause")
 
 
+def exitCommand(app, camera):
+    from MainPage import Dashboard
+    Dashboard(app),
+    camera.release()
+
+
 def Camera(app, cameraNo):
     for widget in app.winfo_children():
         widget.destroy()
@@ -125,8 +131,6 @@ def Camera(app, cameraNo):
     updateFrame(labelCamera, camera)
 
     # -------------------------------- Frame Bottom --------------------------------
-    from MainPage import Dashboard
-
     frameBottom = ctk.CTkFrame(
         master=frame,
         width=app.winfo_screenwidth(),
@@ -172,7 +176,7 @@ def Camera(app, cameraNo):
     exit_button = ctk.CTkButton(
         master=button_frame,
         text="Back",
-        command=lambda: Dashboard(app),
+        command=lambda: exitCommand(app, camera),
         width=150,
         height=40,
         border_color="#81e6dd",
