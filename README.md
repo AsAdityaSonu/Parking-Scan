@@ -38,7 +38,7 @@ Our project is developed by a dedicated team of students under the guidance of e
 
 - **Aditya Pandey** - [GitHub Profile](https://github.com/asadityasonu)
 - **Vaibhav Baldeva**
-- **Mridula Pal** 
+- **Mridula Pal** - [GitHub Profile](https://github.com/Mridula0603)
 - **Nitika Joshi**
 - **Dhwani** 
 
