@@ -1,2 +1,6 @@
+# This line excludes any files related to the YOLOv5 model setup, as specified in the YOLO directory's requirements.txt, from being tracked by Git.
+YOLO/yolov5
+
+
 .DS_Store
 __pycache__
