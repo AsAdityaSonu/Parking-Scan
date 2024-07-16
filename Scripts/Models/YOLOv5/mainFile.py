@@ -6,6 +6,7 @@ import torch
 import cv2
 import numpy as np
 
+# -------------------------------- Load Model --------------------------------
 def loadModel():
     repo_path = Path('Scripts/Models/YOLOv5/yolov5')
 
@@ -15,7 +16,7 @@ def loadModel():
     model = torch.hub.load(str(repo_path), 'custom', path=repo_path / 'yolov5s.pt', source='local')
     return model
 
-# IOU
+# -------------------------------- IOU --------------------------------
 def computeIOU(box1, box2):
     x1, y1, x2, y2 = box1
     x1_p, y1_p, x2_p, y2_p = box2
@@ -109,6 +110,3 @@ def processVideo(videoPath):
     for boxName, boxInfo in BB.items():
         print(f"{boxName}: {boxInfo['flag']}")
 
-
-# Process video from specified path or replace with camera feed for real-time processing
-processVideo('Media/Dataset.mp4')

@@ -4,6 +4,8 @@ from PIL import Image, ImageTk, ImageDraw, ImageFont
 from datetime import datetime
 import os
 
+from Models.YOLOv5.mainFile import processVideo
+
 bgColor = "#0e1017"
 paused = False
 
