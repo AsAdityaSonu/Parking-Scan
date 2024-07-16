@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 
 def loadModel():
-    repo_path = Path('YOLO/yolov5')
+    repo_path = Path('Scripts/Models/YOLOv5/yolov5')
 
     if repo_path not in sys.path:
         sys.path.append(str(repo_path))
