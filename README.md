@@ -18,10 +18,11 @@ Parking Scan serves as an interface for Parking Guidance Information (PGI) syste
 Vision-based systems analyze parking occupancy using images captured by cameras monitoring parking lots. Developing these systems poses challenges such as handling various viewpoints, weather conditions, and object occlusions. Additionally, manual labeling of parking slot locations in images is required, which is sensitive to changes in camera angles, replacements, or maintenance.
 
 This project introduces an algorithm for Automatic Parking Slot Detection and Occupancy Classification (APSD-OC) based solely on input images. The approach involves:
-1. Detecting vehicles in a series of parking lot images and applying clustering in a bird's eye view to identify parking slots.
-2. Classifying each detected parking slot as occupied or vacant using a specifically trained ResNet34 deep classifier.
+1. Detecting vehicles in a series of parking lot images using YOLOv5.
+2. Finding parking slots from the detected vehicles.
+3. Classifying each detected parking slot as occupied or vacant using a specifically trained MobileNet classifier.
 
-The 2-step approach is extensively evaluated on publicly available datasets (PKLot and CNRPark+EXT), demonstrating high efficiency in parking slot detection and a notable degree of robustness against illegal parking or passing vehicles. The trained classifier achieves high accuracy in parking slot occupancy classification.
+The 3-step approach has been extensively evaluated on publicly available datasets (PKLot and CNRPark+EXT), as well as our manual dataset of Thapar University parking lots, demonstrating high efficiency in parking slot detection and notable robustness against illegal parking or passing vehicles. The trained classifier achieves high accuracy in parking slot occupancy classification.
 
 ## About Us
 
@@ -29,18 +30,18 @@ Our project is developed by a dedicated team of students under the guidance of e
 
 ### Mentors
 
-- Prof. Kulbir Singh
-- Dr. Neeru Jindal
 - Dr. Sandeep Mandia
 - Dr. Shishir Maheshwari
+- Dr. Neeru Jindal
+- Prof. Kulbir Singh
 
 ### Students
 
 - **Aditya Pandey** - [GitHub Profile](https://github.com/asadityasonu)
-- **Vaibhav Baldeva**
+- **Vaibhav Baldeva** - [GitHub Profile](https://github.com/VBaldeva)
 - **Mridula Pal** - [GitHub Profile](https://github.com/Mridula0603)
-- **Nitika Joshi**
-- **Dhwani** 
+- **Nitika Joshi** - [GitHub Profile](https://github.com/Nikita0190)
+- **Dhwani** - [GitHub Profile](https://github.com/Dhwanigoyal)
 
 ## Getting Started
 
