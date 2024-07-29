@@ -18,10 +18,14 @@ Parking Scan serves as an interface for Parking Guidance Information (PGI) syste
 Vision-based systems analyze parking occupancy using images captured by cameras monitoring parking lots. Developing these systems poses challenges such as handling various viewpoints, weather conditions, and object occlusions. Additionally, manual labeling of parking slot locations in images is required, which is sensitive to changes in camera angles, replacements, or maintenance.
 
 This project introduces an algorithm for Automatic Parking Slot Detection and Occupancy Classification (APSD-OC) based solely on input images. The approach involves:
-1. Detecting vehicles in a series of parking lot images and applying clustering in a bird's eye view to identify parking slots.
-2. Classifying each detected parking slot as occupied or vacant using a specifically trained ResNet34 deep classifier.
 
-The 2-step approach is extensively evaluated on publicly available datasets (PKLot and CNRPark+EXT), demonstrating high efficiency in parking slot detection and a notable degree of robustness against illegal parking or passing vehicles. The trained classifier achieves high accuracy in parking slot occupancy classification.
+1. Detecting vehicles in a series of parking lot images.
+2. Applying clustering in a bird's eye view to identify parking slots.
+3. Identifying parking slots using either a series of images or hard-coded slot locations.
+4. Classifying each detected parking slot as occupied or vacant using YOLOv5 and basic logic.
+5. Displaying the output on the screen using Tkinter GUI.
+   
+This comprehensive approach is extensively evaluated on publicly available datasets (PKLot and CNRPark+EXT), demonstrating high efficiency in parking slot detection and significant robustness against illegal parking or passing vehicles. The trained YOLOv5 classifier achieves high accuracy in parking slot occupancy classification.
 
 ## About Us
 
