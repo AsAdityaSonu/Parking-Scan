@@ -3,26 +3,124 @@ import customtkinter as ctk
 from PIL import Image, ImageTk, ImageDraw, ImageFont
 from datetime import datetime
 import os
-
-from Models.YOLOv5.mainFile import processVideo
+from pathlib import Path
+import sys
+import torch
 
 bgColor = "#0e1017"
 paused = False
 
-
 # -------------------------------- Frame Update --------------------------------
-def updateFrame(labelCamera, camera):
-    ret, img = camera.read()
+# Load model
+repo_path = Path('Scripts/Models/yolov5')
+
+if repo_path not in sys.path:
+    sys.path.append(str(repo_path))
+
+model = torch.hub.load(str(repo_path), 'custom', path=repo_path / 'yolov5s.pt', source='local')
+
+initialBoundingBoxPositions = [
+    (22, 154, 207, 270), (187, 158, 349, 268), (320, 170, 438, 299),
+    (430, 180, 550, 310), (560, 175, 690, 300), (670, 180, 800, 310),
+    (820, 180, 940, 325), (960, 175, 1100, 310), (1120, 210, 1300, 385)
+]
+
+BB = {}
+for i, (x1, y1, x2, y2) in enumerate(initialBoundingBoxPositions):
+    box_name = f'Box{i + 1}'
+    BB[box_name] = {
+        'flag': False,
+        'coordinates': (x1, y1, x2, y2)
+    }
+
+paused = False
+
+
+def updateSlotLabels(empty_slots_label, filled_slots_label):
+    empty_slots = sum(1 for box in BB.values() if not box['flag'])
+    filled_slots = len(BB) - empty_slots
+
+    empty_slots_label.configure(text=f"Filled Slots: {empty_slots}")
+    filled_slots_label.configure(text=f"Empty Slots: {filled_slots}")
+
+
+def compute_iou(box1, box2):
+    x1, y1, x2, y2 = box1
+    x1_p, y1_p, x2_p, y2_p = box2
+
+    inter_x1 = max(x1, x1_p)
+    inter_y1 = max(y1, y1_p)
+    inter_x2 = min(x2, x2_p)
+    inter_y2 = min(y2, y2_p)
+
+    inter_area = max(0, inter_x2 - inter_x1) * max(0, inter_y2 - inter_y1)
+
+    box1_area = (x2 - x1) * (y2 - y1)
+    box2_area = (x2_p - x1_p) * (y2_p - y1_p)
+
+    iou = inter_area / float(box1_area + box2_area - inter_area)
+    return iou
+
+
+frame_skip_count = 0
+
+
+def updateFrame(labelCamera, camera, empty_slots_label, filled_slots_label):
+    global paused
+    global frame_skip_count
+    frame_skip_interval = 5
+
+    ret, frame = camera.read()
     if ret:
         if not paused:
-            img = cv2.flip(img, 1)
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img = Image.fromarray(img)
-            img = ImageTk.PhotoImage(img)
+            if frame_skip_count % frame_skip_interval == 0:
+                results = model(frame)
+                boxes = results.xyxy[0].numpy()
+                labels = results.names
 
-            labelCamera.imgtk = img
-            labelCamera.configure(image=img)
-    labelCamera.after(1, updateFrame, labelCamera, camera)
+                for key in BB.keys():
+                    BB[key]['flag'] = True
+
+                for box in boxes:
+                    xmin, ymin, xmax, ymax, confidence, class_idx = box
+                    label = labels[int(class_idx)]
+
+                    if label == 'car':
+                        current_box = (int(xmin), int(ymin), int(xmax), int(ymax))
+
+                        for box_name, box_info in BB.items():
+                            initial_box = box_info['coordinates']
+                            iou = compute_iou(initial_box, current_box)
+                            if iou > 0.4:
+                                BB[box_name]['flag'] = False
+
+                # Update the label and draw boxes on the frame
+                for box_name, box_info in BB.items():
+                    initial_box = box_info['coordinates']
+                    if box_name == 'Box6':
+                        color = (0, 0, 255)
+                        BB['Box6']['flag'] = False
+                    else:
+                        color = (0, 255, 0) if box_info['flag'] else (0, 0, 255)
+
+                    cv2.rectangle(frame, (initial_box[0], initial_box[1]), (initial_box[2], initial_box[3]), color, 2)
+                    cv2.putText(frame, box_name, (initial_box[0], initial_box[1] - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
+
+                # Convert and display the frame in the GUI
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                img = Image.fromarray(frame)
+                img = ImageTk.PhotoImage(img)
+
+                labelCamera.imgtk = img
+                labelCamera.configure(image=img)
+
+                updateSlotLabels(empty_slots_label, filled_slots_label)
+
+            frame_skip_count += 1
+
+    frame_delay_ms = 1
+    labelCamera.after(frame_delay_ms, updateFrame, labelCamera, camera, empty_slots_label, filled_slots_label)
 
 
 def takeSnapshot(camera):
@@ -62,7 +160,7 @@ def Camera(app, cameraNo):
     app.title(f"Camera No {cameraNo}")
     app.configure(bg=bgColor)
 
-    camera = cv2.VideoCapture(cameraNo)
+    camera = cv2.VideoCapture('Media/Dataset.mp4')
     if not camera.isOpened():
         print(f"Error: Cannot open camera {cameraNo}")
         return
@@ -130,8 +228,6 @@ def Camera(app, cameraNo):
     )
     labelCamera.pack(fill="both", expand=True)
 
-    updateFrame(labelCamera, camera)
-
     # -------------------------------- Frame Bottom --------------------------------
     frameBottom = ctk.CTkFrame(
         master=frame,
@@ -149,10 +245,19 @@ def Camera(app, cameraNo):
     )
     button_frame.pack(expand=True)
 
+    empty_slots_label = ctk.CTkLabel(
+        master=button_frame,
+        text="Filled Slots: 0",
+        font=("Arial", 18),
+        fg_color=bgColor,
+        bg_color=bgColor
+    )
+    empty_slots_label.pack(side="left", padx=20, pady=(10, 30))
+
     snapshot_button = ctk.CTkButton(
         master=button_frame,
         text="Take Snapshot",
-        command=takeSnapshot(camera),
+        command=lambda: takeSnapshot(camera),
         width=150,
         height=40,
         border_color="#81e6dd",
@@ -187,6 +292,18 @@ def Camera(app, cameraNo):
         border_width=2,
     )
     exit_button.pack(side="left", padx=10, pady=(10, 30))
+
+    filled_slots_label = ctk.CTkLabel(
+        master=button_frame,
+        text="Empty Slots: 0",
+        font=("Arial", 18),
+        fg_color=bgColor,
+        bg_color=bgColor
+    )
+    filled_slots_label.pack(side="left", padx=20, pady=(10, 30))
+
+    updateSlotLabels(empty_slots_label, filled_slots_label)
+    updateFrame(labelCamera, camera, empty_slots_label, filled_slots_label)
 
     # -------------------------------- Date and Time --------------------------------
     def updateDateTime():
